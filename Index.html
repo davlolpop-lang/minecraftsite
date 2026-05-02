@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta name="yandex-verification" content="526941fc0e54c3a2" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Minecraft Java | Все версии + Мобильные</title>
+  <style>
+    :root{
+      --bg:#070b14;
+      --bg2:#0a1020;
+      --panel:rgba(16, 22, 38, 0.72);
+      --text:#f4f7ff;
+      --muted:#aeb8d6;
+      --accent:#7c9cff;
+      --accent2:#6ef3c5;
+      --border:rgba(255,255,255,0.10);
+      --shadow:0 20px 60px rgba(0,0,0,0.35);
+      --radius-xl:32px;
+      --radius-lg:24px;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+
+    html, body{
+      margin:0;
+      min-height:100%;
+      font-family:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background:
+        radial-gradient(circle at 5% 0%, rgba(124,156,255,0.2), transparent 45%),
+        radial-gradient(circle at 95% 100%, rgba(110,243,197,0.15), transparent 40%),
+        linear-gradient(145deg, #050913 0%, #0b1225 70%, #070b14 100%);
+      color:var(--text);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size:48px 48px;
+      mask-image:radial-gradient(circle at 40% 30%, black 30%, transparent 90%);
+      opacity:0.3;
+    }
+
+    .wrap{
+      width:min(1280px, calc(100% - 28px));
+      margin:0 auto;
+      padding:20px 0 48px;
+      position:relative;
+      z-index:2;
+    }
+
+    /* Верхняя панель + мобильные вкладки */
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:20px;
+      background:rgba(8,12,22,0.55);
+      backdrop-filter:blur(12px);
+      border-radius:60px;
+      padding:8px 20px;
+      border:1px solid var(--border);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:18px;
+      background:linear-gradient(135deg, #7c9cff, #6ef3c5);
+      display:grid;
+      place-items:center;
+      font-size:26px;
+      font-weight:900;
+      color:#07101d;
+      box-shadow:0 0 0 2px rgba(255,255,255,0.2);
+    }
+    .brand-text{ font-weight:800; letter-spacing:-0.3px; }
+    .brand-small{ font-size:12px; color:var(--muted); margin-top:2px; }
+
+    .device-tabs{
+      display:flex;
+      gap:8px;
+      background:rgba(0,0,0,0.4);
+      padding:5px;
+      border-radius:999px;
+      border:1px solid var(--border);
+    }
+    .device-tab{
+      border:none;
+      background:transparent;
+      padding:10px 22px;
+      border-radius:999px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:14px;
+      cursor:pointer;
+      transition:0.2s;
+      backdrop-filter:blur(4px);
+    }
+    .device-tab.active{
+      background:linear-gradient(120deg, #ffffff, #e0edff);
+      color:#07101d;
+      box-shadow:0 8px 18px rgba(124,156,255,0.3);
+    }
+
+    /* Hero универсальный */
+    .hero{
+      margin:18px 0 20px;
+      border-radius:var(--radius-xl);
+      border:1px solid var(--border);
+      background:rgba(12,18,32,0.65);
+      backdrop-filter:blur(16px);
+      overflow:hidden;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+    }
+    .hero-left{
+      padding:36px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      background:rgba(124,156,255,0.12);
+      padding:8px 18px;
+      border-radius:999px;
+      width:fit-content;
+      backdrop-filter:blur(8px);
+      font-weight:700;
+    }
+    .title{
+      font-size:clamp(38px, 6vw, 72px);
+      line-height:1;
+      letter-spacing:-2px;
+    }
+    .title-gradient{
+      background:linear-gradient(135deg, #FFF, #b9dcff, #9effda);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:12px 0;
+    }
+    .stat-card{
+      background:rgba(255,255,255,0.04);
+      border-radius:24px;
+      padding:18px;
+      border:1px solid var(--border);
+    }
+    .hero-right{
+      background:linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      border-left:1px solid var(--border);
+      padding:28px;
+    }
+    .preview-card{
+      background:rgba(0,0,0,0.4);
+      border-radius:28px;
+      padding:16px;
+      backdrop-filter:blur(12px);
+    }
+    .file-row{
+      display:flex;
+      justify-content:space-between;
+      padding:14px 0;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+    .badge-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+    .badge{
+      background:rgba(255,255,255,0.07);
+      border-radius:999px;
+      padding:8px 18px;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    /* секции */
+    .section-card{
+      margin-top:24px;
+      padding:28px;
+      border-radius:32px;
+      background:rgba(12,18,30,0.6);
+      backdrop-filter:blur(16px);
+      border:1px solid var(--border);
+    }
+    .versions-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(170px,1fr));
+      gap:14px;
+      margin-top:20px;
+    }
+    .version-btn{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      padding:14px 6px;
+      border-radius:28px;
+      font-weight:700;
+      text-align:center;
+      cursor:pointer;
+      transition:0.2s;
+      color:white;
+    }
+    .version-btn:hover{
+      background:rgba(124,156,255,0.3);
+      transform:scale(1.02);
+    }
+
+    .detail-media{
+      margin:20px 0;
+      border-radius:28px;
+      overflow:hidden;
+      min-height:280px;
+      position:relative;
+      background:#0a0f1c;
+    }
+    .detail-media img{ width:100%; object-fit:cover; min-height:280px; }
+    .fallback-media{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      background:radial-gradient(circle at 30% 20%, #1e2a4a, #020617);
+    }
+    .grid-2col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+      margin:20px 0;
+    }
+    .info-panel{
+      background:rgba(255,255,255,0.03);
+      border-radius:24px;
+      padding:20px;
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .download-button{
+      background:linear-gradient(135deg, #fff, #b6d6ff);
+      color:#0b1120;
+      padding:14px 32px;
+      border-radius:999px;
+      font-weight:800;
+      display:inline-block;
+      text-decoration:none;
+      margin:12px 12px 12px 0;
+    }
+    .back-button{
+      background:rgba(255,255,255,0.08);
+      border:1px solid var(--border);
+      padding:12px 24px;
+      border-radius:999px;
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .hidden{ display:none; }
+    .footer{
+      margin-top:36px;
+      text-align:center;
+      color:#6f7da3;
+      font-size:13px;
+    }
+    @media (max-width: 780px){
+      .hero-grid{ grid-template-columns:1fr; }
+      .hero-right{ border-left:none; border-top:1px solid var(--border);}
+      .grid-2col{ grid-template-columns:1fr; }
+      .stats{ grid-template-columns:1fr; }
+      .topbar{ flex-direction:column; align-items:stretch; border-radius:32px; }
+      .device-tabs{ justify-content:center; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">⛏️</div>
+      <div>
+        <div class="brand-text">Minecraft Versions</div>
+        <div class="brand-small">Java + Bedrock / PE</div>
+      </div>
+    </div>
+    <div class="device-tabs">
+      <button class="device-tab active" data-mode="desktop">💻 Компьютер / Java</button>
+      <button class="device-tab" data-mode="mobile">📱 Телефон / Pocket Edition</button>
+    </div>
+  </div>
+
+  <!-- ГЛАВНЫЙ БЛОК HERO (динамический) -->
+  <div class="hero" id="heroBlock">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="eyebrow"><span class="eyebrow-dot">⬤</span> <span id="heroTagText">Java-издание</span></div>
+        <div class="title"><span class="title-gradient" id="heroTitleText">Minecraft Java Edition</span></div>
+        <p class="muted" id="heroDescText">Официальные версии Java Edition для Windows / macOS / Linux. Выбирай версию и скачивай.</p>
+        <div class="stats">
+          <div class="stat-card"><b id="statVal1">50+</b><span id="statDesc1">Java версий</span></div>
+          <div class="stat-card"><b id="statVal2">Моды</b><span id="statDesc2">Поддержка Forge/Fabric</span></div>
+          <div class="stat-card"><b id="statVal3">Скачай</b><span id="statDesc3">Клик по кнопке</span></div>
+        </div>
+        <div><button class="back-button" id="heroExploreBtn">🎮 Выбрать версию →</button></div>
+      </div>
+      <div class="hero-right">
+        <div class="preview-card">
+          <div style="display:flex; justify-content:space-between; margin-bottom:12px;"><span>⚡ Проверка</span><span>●●●</span></div>
+          <div class="file-row"><strong>Текущий режим</strong><span id="previewMode">Java Edition (ПК)</span></div>
+          <div class="file-row"><strong>Доступно версий</strong><span id="previewCount">34</span></div>
+          <div class="file-row"><strong>Скачивание</strong><span>ZIP архив</span></div>
+        </div>
+        <div class="badge-list">
+          <div class="badge">🌟 All releases</div>
+          <div class="badge" id="dynamicBadge">🔥 1.16-1.21</div>
+          <div class="badge">📦 files/</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- СПИСОК ВЕРСИЙ (динамический) -->
+  <div id="listSection" class="section-card">
+    <h2>📦 Библиотека версий</h2>
+    <p id="listSubtitle">Нажми на версию – покажем описание, картинку и кнопку загрузки</p>
+    <div class="versions-grid" id="versionsContainer"></div>
+  </div>
+
+  <!-- ДЕТАЛИ ВЕРСИИ (скрыт) -->
+  <div id="detailSection" class="section-card hidden">
+    <div><button class="back-button" id="closeDetailBtn">← Назад к списку</button></div>
+    <h2 id="detailVersionTitle">Minecraft 1.16.5</h2>
+    <div class="detail-media">
+      <img id="detailImg" src="" style="display:none;" alt="screenshot">
+      <div id="detailFallback" class="fallback-media"><div>🖼️ Скриншот версии<br>Файл: images/версия-main.jpg</div></div>
+    </div>
+    <div class="grid-2col">
+      <div class="info-panel"><h3>📖 Описание</h3><p id="detailDescText"></p></div>
+      <div class="info-panel"><h3>✨ Особенности</h3><ul id="detailFeaturesList"></ul></div>
+    </div>
+    <div>
+      <a id="downloadLinkBtn" class="download-button" href="#" download>⬇ Скачать ZIP</a>
+      <button class="back-button" id="closeDetailBtn2">📋 К списку</button>
+    </div>
+  </div>
+  <div class="footer">
+    📂 Структура: files/1.16.5.zip | images/1.16.5-main.jpg | и другие скриншоты<br>
+    🧩 Для телефонов — Bedrock Edition, отдельные файлы.
+  </div>
+</div>
+
+<script>
+  // --------------------------------------------- СПИСКИ ВЕРСИЙ -----------------------------------------
+  const JAVA_VERSIONS = [
+    "1.16.1", "1.16.2", "1.16.3", "1.16.4", "1.16.5",
+    "1.17", "1.17.1", "1.18", "1.18.1", "1.18.2",
+    "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4",
+    "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
+    "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5"
+  ];
+  
+  const BEDROCK_VERSIONS = [
+    "1.20.30", "1.20.40", "1.20.50", "1.20.60", "1.20.70",
+    "1.21.0", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5",
+    "1.21.20", "1.21.30", "1.21.40"
+  ];
+
+  // КОНТЕНТ ДЛЯ КАЖДОЙ ВЕРСИИ (расширенный)
+  const versionDb = {};
+
+  // Генератор описаний для Java
+  JAVA_VERSIONS.forEach(v => {
+    const isPatch = v.split(".").length === 3;
+    const major = v.split(".").slice(0,2).join(".");
+    versionDb[`java_${v}`] = {
+      title: `Minecraft Java Edition ${v}`,
+      desc: isPatch ? `Стабильный патч для ${major}. Исправлены критичные ошибки, улучшена производительность. Рекомендуется для модовых сборок.` 
+                    : `Крупное обновление ${v} — новые блоки, механики и генерация мира. Отличный выбор для выживания.`,
+      features: [`📦 Версия ${v}`, `🎮 Java Edition`, `🛠️ Поддержка модов`, isPatch ? `🔧 Багфиксы` : `✨ Новый контент`, `💻 Кроссплатформа`],
+      file: `files/java_${v}.zip`,
+      image: `images/java_${v}-main.jpg`
+    };
+  });
+  // Кастом для популярных
+  versionDb["java_1.16.5"] = { title: "Minecraft 1.16.5 (Nether Update)", desc: "Самая популярная версия! Незерит, пиглины, базальтовые дельты. Огромное количество модов и стабильность.", features: ["🔥 Незеритовый комплект", "👹 Пиглины и брутальные башни", "🌋 Биомы Нижнего мира", "📦 10к+ модов", "💎 Идеально для серверов"], file: "files/java_1.16.5.zip", image: "images/java_1.16.5-main.jpg" };
+  versionDb["java_1.20.6"] = { title: "Minecraft 1.20.6 Trails & Tales", desc: "Археология, вишнёвые рощи, библиотека. Очень атмосферное обновление.", features: ["🏺 Осколки керамики", "🌸 Вишнёвые деревья", "📜 Броня с новыми узорами", "🎨 Декоративные блоки"], file: "files/java_1.20.6.zip", image: "images/java_1.20.6-main.jpg" };
+  versionDb["java_1.21.5"] = { title: "Minecraft 1.21.5 Tricky Trials", desc: "Актуальная версия с испытательными камерами, ветряными зарядами и новыми мобами.", features: ["⚙️ Испытательные спавнеры", "💨 Ветряной заряд", "🛡️ Непобедимые щиты", "✨ Анимации"], file: "files/java_1.21.5.zip", image: "images/java_1.21.5-main.jpg" };
+
+  // Bedrock / Мобильные версии
+  BEDROCK_VERSIONS.forEach(v => {
+    versionDb[`bedrock_${v}`] = {
+      title: `Minecraft Bedrock ${v} (PE)`,
+      desc: `Мобильная версия ${v} для Android / iOS. Кроссплатформа, маркетплейс, мультиплеер по сети. Оптимизирована для телефонов.`,
+      features: [`📱 Режим телефона`, `⚡ Render Dragon`, `🎮 Контроллеры + тач`, `🌐 Кроссплей`, `🧩 Аддоны`],
+      file: `files/bedrock_${v}.apk`,
+      image: `images/bedrock_${v}-main.jpg`
+    };
+  });
+  // Детали для популярных Bedrock
+  versionDb["bedrock_1.21.20"] = { title: "Minecraft Bedrock 1.21.20", desc: "Актуальный клиент для мобильных устройств. Синхронизация с Xbox, Realms и модами.", features: ["📱 Оптимизация батареи", "🎮 Геймпад", "🏆 Достижения", "🔄 Realms", "🔊 Новые звуки"], file: "files/bedrock_1.21.20.apk", image: "images/bedrock_1.21.20-main.jpg" };
+
+  // -------------------------------------------------- State --------------------------------------------------
+  let currentMode = "desktop"; // desktop / mobile
+  let currentVersionId = null;
+
+  // DOM
+  const heroTag = document.getElementById("heroTagText");
+  const heroTitle = document.getElementById("heroTitleText");
+  const heroDesc = document.getElementById("heroDescText");
+  const statVal1 = document.getElementById("statVal1");
+  const statDesc1 = document.getElementById("statDesc1");
+  const statVal2 = document.getElementById("statVal2");
+  const statDesc2 = document.getElementById("statDesc2");
+  const statVal3 = document.getElementById("statVal3");
+  const statDesc3 = document.getElementById("statDesc3");
+  const previewModeSpan = document.getElementById("previewMode");
+  const previewCountSpan = document.getElementById("previewCount");
+  const dynamicBadge = document.getElementById("dynamicBadge");
+  const listSubtitle = document.getElementById("listSubtitle");
+  const versionsContainer = document.getElementById("versionsContainer");
+  const listSection = document.getElementById("listSection");
+  const detailSection = document.getElementById("detailSection");
+  const closeDetailBtns = document.querySelectorAll("#closeDetailBtn, #closeDetailBtn2");
+  const heroExploreBtn = document.getElementById("heroExploreBtn");
+  
+  const detailVersionTitle = document.getElementById("detailVersionTitle");
+  const detailImg = document.getElementById("detailImg");
+  const detailFallbackDiv = document.getElementById("detailFallback");
+  const detailDescText = document.getElementById("detailDescText");
+  const detailFeaturesList = document.getElementById("detailFeaturesList");
+  const downloadLinkBtn = document.getElementById("downloadLinkBtn");
+  
+  function renderVersionsList() {
+    const versionsList = currentMode === "desktop" ? JAVA_VERSIONS : BEDROCK_VERSIONS;
+    const prefix = currentMode === "desktop" ? "java" : "bedrock";
+    listSubtitle.innerText = currentMode === "desktop" 
+      ? "💾 Нажми на версию Java – откроются подробности и ссылка" 
+      : "📱 Нажми на версию Bedrock (PE) – описание и APK/файл для телефона";
+    
+    versionsContainer.innerHTML = versionsList.map(v => {
+      const fullId = `${prefix}_${v}`;
+      const verData = versionDb[fullId] || { title: `Minecraft ${currentMode === "desktop" ? "Java" : "Bedrock"} ${v}` };
+      return `<div class="version-btn" data-version-id="${fullId}" data-version-name="${v}">📦 ${verData.title.substring(0, 28)}</div>`;
+    }).join("");
+    
+    // events
+    document.querySelectorAll(".version-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const versionId = btn.getAttribute("data-version-id");
+        showVersionDetail(versionId);
+      });
+    });
+  }
+  
+  function showVersionDetail(versionId) {
+    const data = versionDb[versionId];
+    if (!data) return;
+    currentVersionId = versionId;
+    // заполнить
+    detailVersionTitle.innerText = data.title;
+    detailDescText.innerText = data.desc;
+    detailFeaturesList.innerHTML = data.features.map(f => `<li>${f}</li>`).join("");
+    downloadLinkBtn.href = data.file;
+    downloadLinkBtn.innerText = `⬇ Скачать ${currentMode === "desktop" ? "JAR/ZIP" : "APK"}`;
+    
+    // картинка
+    detailImg.src = data.image;
+    detailImg.style.display = "block";
+    detailImg.onload = () => {
+      detailFallbackDiv.style.display = "none";
+    };
+    detailImg.onerror = () => {
+      detailImg.style.display = "none";
+      detailFallbackDiv.style.display = "flex";
+      detailFallbackDiv.innerHTML = `<div>🖼️ Нет изображения: ${data.image}<br>Добавь файл в папку images/</div>`;
+    };
+    
+    listSection.classList.add("hidden");
+    detailSection.classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  
+  function updateHeroAndUI() {
+    const isDesktop = currentMode === "desktop";
+    if (isDesktop) {
+      heroTag.innerText = "💻 Java Edition / ПК";
+      heroTitle.innerText = "Minecraft Java Edition";
+      heroDesc.innerText = "Огромный выбор версий 1.16 → 1.21. Лицензионные сборки, моды, сервера. Скачивай архив и играй.";
+      statVal1.innerText = "34+"; statDesc1.innerText = "Java-версий";
+      statVal2.innerText = "Forge/Fabric"; statDesc2.innerText = "Моддинг";
+      statVal3.innerText = "Быстро"; statDesc3.innerText = "Прямая загрузка";
+      previewModeSpan.innerText = "Java Edition (ПК)";
+      previewCountSpan.innerText = JAVA_VERSIONS.length;
+      dynamicBadge.innerText = "⚡ Java 1.16+";
+    } else {
+      heroTag.innerText = "📱 Bedrock / Pocket Edition";
+      heroTitle.innerText = "Minecraft на телефон";
+      heroDesc.innerText = "Мобильная версия для Android / iOS. Полная кроссплатформа, маркетплейс и Realms. Играй с друзьями.";
+      statVal1.innerText = "14+"; statDesc1.innerText = "Bedrock сборок";
+      statVal2.innerText = "Кроссплей"; statDesc2.innerText = "ПК + консоль";
+      statVal3.innerText = "APK / IPA"; statDesc3.innerText = "Установка";
+      previewModeSpan.innerText = "Bedrock / Телефон";
+      previewCountSpan.innerText = BEDROCK_VERSIONS.length;
+      dynamicBadge.innerText = "📱 Мобильная оптимизация";
+    }
+    // перерисовать список
+    renderVersionsList();
+    // если детали открыты и режим сменился — закрыть детали
+    if (!detailSection.classList.contains("hidden")) {
+      detailSection.classList.add("hidden");
+      listSection.classList.remove("hidden");
+    }
+  }
+  
+  function setMode(mode) {
+    currentMode = mode;
+    document.querySelectorAll(".device-tab").forEach(tab => {
+      if ((mode === "desktop" && tab.innerText.includes("Компьютер")) ||
+          (mode === "mobile" && tab.innerText.includes("Телефон"))) {
+        tab.classList.add("active");
+      } else {
+        tab.classList.remove("active");
+      }
+    });
+    updateHeroAndUI();
+  }
+  
+  // обработчики вкладок
+  document.querySelectorAll(".device-tab").forEach(tab => {
+    tab.addEventListener("click", (e) => {
+      const mode = tab.innerText.includes("Компьютер") ? "desktop" : "mobile";
+      setMode(mode);
+    });
+  });
+  
+  // закрытие деталей
+  closeDetailBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      detailSection.classList.add("hidden");
+      listSection.classList.remove("hidden");
+      window.scrollTo({ top: listSection.offsetTop - 20, behavior: "smooth" });
+    });
+  });
+  
+  heroExploreBtn.addEventListener("click", () => {
+    listSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  
+  // начальная загрузка
+  setMode("desktop");
+  
+  // дополнительно: поддержка прямой ссылки ?version=java_1.16.5
+  const urlParams = new URLSearchParams(window.location.search);
+  const directVersion = urlParams.get("version");
+  if (directVersion && versionDb[directVersion]) {
+    setTimeout(() => showVersionDetail(directVersion), 100);
+  }
+</script>
+</body>
+</html>
+<title>Minecraft versions: Скачать Java и Bedrock все версии | Бесплатно</title>
+<meta name="description" content="Скачивай любую версию Minecraft Java и Bedrock: 1.16.5, 1.20.6, 1.21.5. Подробные описания, скриншоты, гайды по установке. Быстро и бесплатно.">
+<meta name="keywords" content="скачать майнкрафт, minecraft версии, minecraft java скачать, minecraft 1.16.5, minecraft bedrock">
+<link rel="canonical" href="https://твой-сайт.ру/index.html">
